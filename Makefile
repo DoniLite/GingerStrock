@@ -1,34 +1,44 @@
-# Nom du fichier Java sans l'extension
-MAIN_CLASS = Main
+# Définir les variables
+GRADLEW = ./gradlew
+PROJECT_NAME = Gingerstrock
 
-# Compilateur Java
-JAVAC = javac
+# Cibles par défaut
+.PHONY: all clean build test run
 
-# Interpréteur Java
-JAVA = java
+all: build
 
-# Dossier source
-SRC_DIR = src
-
-# Les fichiers sources
-SOURCES = $(SRC_DIR)/$(MAIN_CLASS).java
-
-# Les fichiers compilés
-CLASSES = $(SOURCES:.java=.class)
-
-# La règle par défaut
-all: $(CLASSES)
-
-# Règle pour compiler les fichiers .java en .class
-$(SRC_DIR)/%.class: $(SRC_DIR)/%.java
-	$(JAVAC) -d $(SRC_DIR) $<
-
-# Règle pour exécuter le programme
-run: all
-	$(JAVA) -cp $(SRC_DIR) $(MAIN_CLASS)
-
-# Règle pour nettoyer les fichiers compilés
+# Nettoyer le projet
 clean:
-	rm -f $(SRC_DIR)/*.class
+	$(GRADLEW) clean
 
-.PHONY: all run clean
+# Construire le projet
+build:
+	$(GRADLEW) build
+
+# Exécuter les tests
+test:
+	$(GRADLEW) test
+
+# Lancer l'application
+run:
+	$(GRADLEW) bootRun
+
+# Mettre à jour les dépendances
+dependencies:
+	$(GRADLEW) dependencies
+
+# Mettre à jour les dépendances (refresh versions)
+refresh-dependencies:
+	$(GRADLEW) --refresh-dependencies
+
+# Générer les javadocs
+javadoc:
+	$(GRADLEW) javadoc
+
+# Mettre à jour les dépendances du wrapper Gradle
+wrapper:
+	$(GRADLEW) wrapper --gradle-version=7.6.1
+
+# Afficher les tâches disponibles
+tasks:
+	$(GRADLEW) tasks
